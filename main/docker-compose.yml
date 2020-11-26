@@ -1,7 +1,7 @@
 version: '3.5'
 services:
   advertisement:
-    image: dltjdwls101/advertisement_local:${VERSION}
+    image: dltjdwls101/advertisement:${VERSION}
     container_name: advertisement
     environment:
       MYSQL_ADDRESS: ${MYSQL_ADDRESS}

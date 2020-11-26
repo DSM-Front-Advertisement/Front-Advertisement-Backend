@@ -1,0 +1,25 @@
+version: '3.5'
+
+services:
+  advertisement_mysql:
+    image: mysql:8.0
+    container_name: advertisement_mysql
+    volumes:
+      - advertisement_db_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: frontAdvertisement
+    networks:
+      - advertisement_local
+    ports:
+      - 3306:3306
+
+volumes:
+  advertisement_db_data:
+    name: advertisement_db_data
+    driver: local
+
+networks:
+  advertisement_local:
+    name: advertisement_local
+    driver: bridge

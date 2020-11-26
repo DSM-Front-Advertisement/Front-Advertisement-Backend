@@ -1,0 +1,16 @@
+version: '3.5'
+services:
+  advertisement:
+    image: dltjdwls101/advertisement_local:${VERSION}
+    container_name: advertisement
+    environment:
+      MYSQL_ADDRESS: ${MYSQL_ADDRESS}
+    networks:
+      - advertisement_local
+    ports:
+      - 8080:8080
+
+networks:
+  advertisement_local:
+    name: advertisement_local
+    driver: bridge

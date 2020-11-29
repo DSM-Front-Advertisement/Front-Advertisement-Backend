@@ -7,6 +7,7 @@ import front_advertisement_backend.main.entities.repository.ImageRepository;
 import front_advertisement_backend.main.payloads.requests.EnrollmentWriteRequest;
 import front_advertisement_backend.main.payloads.responses.AdvertisementResponse;
 import front_advertisement_backend.main.payloads.responses.SearchResponse;
+import front_advertisement_backend.main.utils.S3Service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,10 @@ import java.util.List;
 public class EnrollmentServiceImpl implements EnrollmentService {
 
     private final EnrollmentRepository enrollmentRepository;
+
     private final ImageRepository imageRepository;
+
+    private final S3Service s3Service;
 
     @Value("${image.upload.dir}")
     private String imageDirPath;
@@ -52,6 +56,10 @@ public class EnrollmentServiceImpl implements EnrollmentService {
             );
 
             enrollmentWriteRequest.getImageFile().transferTo(new File(imageDirPath, fileName.toString()));
+
+            if (enrollmentWriteRequest.getImageFile() != null) {
+                s3Service.upload(enrollmentWriteRequest.getImageFile(), originalFileName);
+            }
         }
 
         return enrollment.getAdvertisementId();

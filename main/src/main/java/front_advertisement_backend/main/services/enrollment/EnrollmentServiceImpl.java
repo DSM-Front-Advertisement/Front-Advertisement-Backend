@@ -55,10 +55,8 @@ public class EnrollmentServiceImpl implements EnrollmentService {
                             .build()
             );
 
-            enrollmentWriteRequest.getImageFile().transferTo(new File(imageDirPath, fileName.toString()));
-
             if (enrollmentWriteRequest.getImageFile() != null) {
-                s3Service.upload(enrollmentWriteRequest.getImageFile(), originalFileName);
+                s3Service.upload(enrollmentWriteRequest.getImageFile(), fileName.toString());
             }
         }
 
